@@ -1,2 +1,2 @@
 This is a project from a React course in Udemy. 
-Updating when I add to it during the course.
+Updating when I add to it.
