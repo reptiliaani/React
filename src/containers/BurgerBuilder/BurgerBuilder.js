@@ -91,25 +91,19 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true });
-    //Saver option for handling price would be at the serverside, because this way it's harder for the user to manipulate the price.
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Aleksi",
-        address: {
-          street: "Teststreet 1",
-          zipCode: "123214",
-          country: "Finland",
-        },
-        email: "test@test.com",
-      },
-    };
-    axios
-      .post("/orders.json", order)
-      .then((response) => this.setState({ loading: false, purchasing: false }))
-      .catch((error) => this.setState({ loading: false, purchasing: false }));
+    
+    const quaryParams = [];
+
+    for (let i in this.state.ingredients){
+      quaryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+    }
+    quaryParams.push('price='+ this.state.totalPrice);
+    const queryString = quaryParams.join('&');
+
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString,
+    });
   };
 
   render() {
